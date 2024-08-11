@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4ik8oruhvtfv"]
+
+[ext_resource type="Script" path="res://scripts/profile_setup.gd" id="1_dpgmm"]
+[ext_resource type="PackedScene" uid="uid://btr43ps8xb5c7" path="res://scenes/profile_setup_player.tscn" id="1_vyud4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dewkn"]
+bg_color = Color(1, 0.898039, 0.741176, 1)
+
+[node name="ProfileSetup" type="Control" node_paths=PackedStringArray("player_1", "player_2")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dpgmm")
+player_1 = NodePath("VBoxContainer/Player1")
+player_2 = NodePath("VBoxContainer/CenterContainer/Panel/Player2")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dewkn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Panel" type="Panel" parent="VBoxContainer/CenterContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Player2" parent="VBoxContainer/CenterContainer/Panel" instance=ExtResource("1_vyud4")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 960.0
+offset_top = 270.0
+offset_right = 2880.0
+offset_bottom = 810.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 3.14159
+
+[node name="Player1" parent="VBoxContainer" instance=ExtResource("1_vyud4")]
+layout_mode = 2
+size_flags_vertical = 3

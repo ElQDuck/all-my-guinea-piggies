@@ -1,0 +1,49 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="All My Guinea Piggies"
+config/name_localized={
+"de_DE": "Alle Meine Meerschweinchen",
+"nb_NO": "Alle Mine Marsvinet"
+}
+config/version="0.0.1"
+run/main_scene="res://scenes/start_screen.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/bg_color=Color(1, 0.780392, 0.560784, 1)
+boot_splash/image="res://assets/rls/boot_splash.png"
+config/icon="res://assets/icons/icon_512.png"
+
+[autoload]
+
+GlobalVars="*res://autoload/global_vars.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom="res://themes/main_theme.tres"
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/translations/translation.de.translation", "res://assets/translations/translation.en.translation", "res://assets/translations/translation.nb.translation")
+locale/locale_filter_mode=0
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

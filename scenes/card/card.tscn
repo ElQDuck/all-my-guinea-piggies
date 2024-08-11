@@ -1,0 +1,146 @@
+[gd_scene load_steps=13 format=3 uid="uid://dadljf7sfmpob"]
+
+[ext_resource type="Shader" path="res://assets/shader/fake_3D.gdshader" id="1_38rxx"]
+[ext_resource type="Script" path="res://scenes/card/scripts/card_scene.gd" id="1_npqod"]
+[ext_resource type="Texture2D" uid="uid://dak106rnrsvrp" path="res://scenes/card/visuals/card_preset.png" id="2_5bkqo"]
+[ext_resource type="Texture2D" uid="uid://c4ko2t28vkyww" path="res://scenes/card/visuals/Arya1.png" id="3_5nqvb"]
+[ext_resource type="Shader" path="res://assets/shader/animated-and-gradient-outlines.gdshader" id="3_d03sl"]
+[ext_resource type="Shader" path="res://assets/shader/sprite_pixel_explosion_shader/sprite_pixel_explosion_shader.gdshader" id="5_hqnli"]
+[ext_resource type="Texture2D" uid="uid://6qhs33iro4xr" path="res://scenes/card/visuals/Einstein1.png" id="6_rgnc5"]
+[ext_resource type="Texture2D" uid="uid://cnexrbw06ujk1" path="res://assets/shader/sprite_pixel_explosion_shader/particle.png" id="7_q3jsh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0tcot"]
+resource_local_to_scene = true
+shader = ExtResource("3_d03sl")
+shader_parameter/max_line_width = 50.0
+shader_parameter/min_line_width = 0.91
+shader_parameter/freq = 9.0
+shader_parameter/block_size = 5.16
+shader_parameter/starting_colour = Color(0, 0.866667, 0, 1)
+shader_parameter/ending_colour = Color(0.145098, 0.8, 0, 0.596078)
+shader_parameter/curve = 0.895
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_am5o8"]
+resource_local_to_scene = true
+shader = ExtResource("1_38rxx")
+shader_parameter/rect_size = null
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = false
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5e83g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2txnt"]
+resource_local_to_scene = true
+shader = ExtResource("5_hqnli")
+shader_parameter/spread = 180.0
+shader_parameter/inherit_emitter_velocity_ratio = 0.0
+shader_parameter/initial_linear_velocity_min = 0.0
+shader_parameter/initial_linear_velocity_max = 100.0
+shader_parameter/orbit_velocity_min = 0.0
+shader_parameter/orbit_velocity_max = 0.0
+shader_parameter/radial_velocity_min = 0.0
+shader_parameter/radial_velocity_max = 0.0
+shader_parameter/linear_accel_min = 0.0
+shader_parameter/linear_accel_max = 0.0
+shader_parameter/radial_accel_min = 0.0
+shader_parameter/radial_accel_max = 0.0
+shader_parameter/tangent_accel_min = null
+shader_parameter/tangent_accel_max = 0.0
+shader_parameter/damping_min = 0.0
+shader_parameter/damping_max = 0.0
+shader_parameter/scale_min = 1.0
+shader_parameter/scale_max = 10.0
+shader_parameter/lifetime_randomness = 0.0
+shader_parameter/emission_shape_offset = Vector3(0, 0, 0)
+shader_parameter/emission_shape_scale = Vector3(1, 1, 1)
+shader_parameter/emission_box_extents = Vector3(12, 18, 0)
+shader_parameter/sprite = ExtResource("6_rgnc5")
+
+[node name="Card" type="Panel" node_paths=PackedStringArray("card_view_port", "displayed_card_image", "explosion_shader", "glow_effect")]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_npqod")
+card_view_port = NodePath("SubViewportContainer")
+back_texture = ExtResource("2_5bkqo")
+front_texture = ExtResource("2_5bkqo")
+displayed_card_image = NodePath("SubViewportContainer/SubViewport/Panel/CardImage")
+explosion_shader = NodePath("SubViewportContainer/GPUParticles2D")
+glow_effect = NodePath("GlowEffect")
+
+[node name="GlowEffect" type="SubViewportContainer" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_0tcot")
+layout_mode = 0
+offset_left = -300.0
+offset_top = -480.0
+offset_right = 300.0
+offset_bottom = 480.0
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="GlowEffect"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(600, 960)
+render_target_update_mode = 0
+
+[node name="Panel" type="Panel" parent="GlowEffect/SubViewport"]
+custom_minimum_size = Vector2(600, 960)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -480.0
+offset_right = 300.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.48, 0.48)
+pivot_offset = Vector2(300, 480)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_am5o8")
+layout_mode = 0
+offset_left = -300.0
+offset_top = -480.0
+offset_right = 300.0
+offset_bottom = 480.0
+mouse_filter = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(600, 960)
+render_target_update_mode = 4
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/SubViewport"]
+custom_minimum_size = Vector2(600, 960)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5e83g")
+
+[node name="CardImage" type="TextureRect" parent="SubViewportContainer/SubViewport/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_5nqvb")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="SubViewportContainer"]
+position = Vector2(300, 480)
+emitting = false
+amount = 4096
+process_material = SubResource("ShaderMaterial_2txnt")
+texture = ExtResource("7_q3jsh")
+lifetime = 10.0
+one_shot = true
+speed_scale = 10.0
+explosiveness = 1.0
+local_coords = true

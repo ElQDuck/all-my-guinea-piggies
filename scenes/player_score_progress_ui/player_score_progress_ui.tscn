@@ -1,0 +1,184 @@
+[gd_scene load_steps=13 format=3 uid="uid://d4lbnxfu02r11"]
+
+[ext_resource type="Texture2D" uid="uid://br5sng1ho8px8" path="res://assets/avatar_images/profile1.png" id="1_3rq4a"]
+[ext_resource type="Script" path="res://scenes/player_score_progress_ui/player_score_progress_ui.gd" id="1_k2m2o"]
+[ext_resource type="Shader" path="res://assets/shader/progress_shader.gdshader" id="2_3w5wa"]
+[ext_resource type="Texture2D" uid="uid://dibt7gh4myqa8" path="res://assets/avatar_images/profile5.png" id="3_lt0hw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oxx0f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wb73w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03v3v"]
+bg_color = Color(1, 0.713967, 0.82335, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 0.494118, 0.713726, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bxrnn"]
+bg_color = Color(1, 0.494118, 0.713726, 1)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0g438"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_usjib"]
+resource_local_to_scene = true
+shader = ExtResource("2_3w5wa")
+shader_parameter/color = Color(1, 1, 0.192157, 1)
+shader_parameter/background_color = Color(1, 1, 1, 0)
+shader_parameter/progress = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6k07p"]
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b21v6"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.603922, 0.392157, 0.211765, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+
+[node name="PlayerScoreProgressUi" type="Panel" node_paths=PackedStringArray("profile_image", "profile_panel", "name_label", "name_panel", "progress_label", "progress_panel")]
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_oxx0f")
+script = ExtResource("1_k2m2o")
+player_number = 1
+profile_image = NodePath("HBoxContainer/Panel/Profile/ProfileImage")
+profile_panel = NodePath("HBoxContainer/Panel/Profile/Panel")
+name_label = NodePath("HBoxContainer/Panel/Profile/Name/Label")
+name_panel = NodePath("HBoxContainer/Panel/Profile/Name")
+progress_label = NodePath("HBoxContainer/Panel2/MarginContainer/ProgressBorder/Label")
+progress_panel = NodePath("HBoxContainer/Panel2/MarginContainer/Progress")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="CenterContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Profile" type="Panel" parent="HBoxContainer/Panel"]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wb73w")
+
+[node name="Panel" type="Panel" parent="HBoxContainer/Panel/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_03v3v")
+
+[node name="ProfileImage" type="TextureRect" parent="HBoxContainer/Panel/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3rq4a")
+expand_mode = 3
+
+[node name="Name" type="Panel" parent="HBoxContainer/Panel/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 240.0
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_bxrnn")
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel/Profile/Name"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LongUser Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Panel2" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0g438")
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 96
+theme_override_constants/margin_right = 32
+
+[node name="Progress" type="Panel" parent="HBoxContainer/Panel2/MarginContainer"]
+material = SubResource("ShaderMaterial_usjib")
+custom_minimum_size = Vector2(768, 64)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_6k07p")
+
+[node name="ProgressBorder" type="Panel" parent="HBoxContainer/Panel2/MarginContainer"]
+custom_minimum_size = Vector2(768, 64)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_b21v6")
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Panel2/MarginContainer/ProgressBorder"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+grow_vertical = 2
+texture = ExtResource("3_lt0hw")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="HBoxContainer/Panel2/MarginContainer/ProgressBorder"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.603922, 0.392157, 0.211765, 1)
+theme_override_font_sizes/font_size = 40
+text = "33/77"
+horizontal_alignment = 1
+vertical_alignment = 1

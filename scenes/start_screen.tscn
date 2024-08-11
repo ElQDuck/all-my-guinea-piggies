@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://uvih57s5oxsu"]
+
+[ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_1lscr"]
+[ext_resource type="Texture2D" uid="uid://dn4te5tyiu16o" path="res://assets/backgrounds/title_background.svg" id="1_v8ctg"]
+[ext_resource type="Texture2D" uid="uid://cpx4thv5nsipw" path="res://assets/flags/de.svg" id="3_vq5yv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l142b"]
+bg_color = Color(1, 0.780392, 0.560784, 1)
+
+[node name="Control" type="Control" node_paths=PackedStringArray("StartGameButton", "language_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1lscr")
+StartGameButton = NodePath("VBoxContainer/StartGameButton")
+language_button = NodePath("TextureButton")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l142b")
+
+[node name="PawSteps" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_v8ctg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -175.5
+offset_right = 175.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.603922, 0.392157, 0.211765, 1)
+theme_override_constants/outline_size = 64
+theme_override_font_sizes/font_size = 128
+text = "GAME_TITLE"
+horizontal_alignment = 1
+
+[node name="StartGameButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 128
+text = "START_GAME"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_top = 25.0
+offset_right = -22.0
+offset_bottom = 146.0
+grow_horizontal = 0
+texture_normal = ExtResource("3_vq5yv")
+ignore_texture_size = true
+stretch_mode = 5
