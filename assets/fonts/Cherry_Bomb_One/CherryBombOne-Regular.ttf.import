@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/CherryBombOne-Regular.ttf-69a1c8c0f152dad07f8
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
