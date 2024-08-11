@@ -1,0 +1,644 @@
+[gd_scene load_steps=32 format=3 uid="uid://b74phqnk6cljg"]
+
+[ext_resource type="Script" path="res://scripts/Table.gd" id="1_0c6vw"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_t3f4k"]
+[ext_resource type="Texture2D" uid="uid://dak106rnrsvrp" path="res://scenes/card/visuals/card_preset.png" id="5_26hgj"]
+[ext_resource type="Script" path="res://scripts/Deck.gd" id="6_sbxb1"]
+[ext_resource type="Script" path="res://scripts/dice_selection.gd" id="8_3oo5e"]
+[ext_resource type="ButtonGroup" uid="uid://37lcotm7gde" path="res://button_groups/lofty_selection_btn_group.tres" id="8_200mg"]
+[ext_resource type="Texture2D" uid="uid://bbq3eyk2q4hq6" path="res://assets/rest/lofty_1.svg" id="8_jqjl3"]
+[ext_resource type="Texture2D" uid="uid://irnrwx3nq72y" path="res://assets/rest/lofty_2.svg" id="9_2rlq8"]
+[ext_resource type="Texture2D" uid="uid://b3ufsygq82u1f" path="res://assets/rest/lofty_1_pressed.svg" id="10_ml0yv"]
+[ext_resource type="Texture2D" uid="uid://juhgiaew4qig" path="res://assets/rest/lofty_3.svg" id="10_v1rnv"]
+[ext_resource type="Texture2D" uid="uid://bo8p8xgav6a18" path="res://assets/backgrounds/cave.png" id="11_lvt0k"]
+[ext_resource type="Texture2D" uid="uid://76gblt156g3q" path="res://assets/rest/lofty_2_pressed.svg" id="12_3y6em"]
+[ext_resource type="PackedScene" uid="uid://bkpglbq6yv1v0" path="res://scenes/player.tscn" id="12_hmlvb"]
+[ext_resource type="Texture2D" uid="uid://cgnkb35bnn5ha" path="res://assets/rest/lofty_3_pressed.svg" id="14_ec826"]
+[ext_resource type="PackedScene" uid="uid://d4lbnxfu02r11" path="res://scenes/player_score_progress_ui/player_score_progress_ui.tscn" id="17_4tjhk"]
+[ext_resource type="Script" path="res://scripts/round_end_ui.gd" id="17_ci7ji"]
+[ext_resource type="Texture2D" uid="uid://br5sng1ho8px8" path="res://assets/avatar_images/profile1.png" id="17_rn1av"]
+[ext_resource type="PackedScene" uid="uid://dfwqqpqavplgh" path="res://scenes/fortune_wheel.tscn" id="17_yrr48"]
+[ext_resource type="Texture2D" uid="uid://dibt7gh4myqa8" path="res://assets/avatar_images/profile5.png" id="18_sdo15"]
+[ext_resource type="Script" path="res://scripts/game_end_ui.gd" id="19_s513q"]
+[ext_resource type="PackedScene" uid="uid://dadljf7sfmpob" path="res://scenes/card/card.tscn" id="22_jfthc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c6hth"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bkh57"]
+bg_color = Color(1, 0.898039, 0.741176, 0.752941)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ufxd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mtn8"]
+bg_color = Color(1, 0.898039, 0.741176, 1)
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(0.603922, 0.392157, 0.211765, 1)
+corner_radius_top_left = 64
+corner_radius_top_right = 64
+corner_radius_bottom_right = 64
+corner_radius_bottom_left = 64
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ykh3j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h407c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sjf5d"]
+bg_color = Color(1, 0.713967, 0.82335, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 0.494118, 0.713726, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrx2q"]
+bg_color = Color(1, 0.494118, 0.713726, 1)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jv8gw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vqieu"]
+
+[node name="Game" type="Node2D" node_paths=PackedStringArray("player_1", "player_2", "table", "dice_selection_ui", "deck", "round_end_ui", "game_end_ui")]
+script = ExtResource("1_t3f4k")
+player_1 = NodePath("BoardUi/VBoxContainer/Player1")
+player_2 = NodePath("BoardUi/VBoxContainer/Panel/Player2")
+table = NodePath("BoardUi/VBoxContainer/Table")
+dice_selection_ui = NodePath("DiceSelectionUi")
+deck = NodePath("BoardUi/VBoxContainer/Table/Cards/DeckArea/MarginContainer/Deck")
+round_end_ui = NodePath("RoundEndUi")
+game_end_ui = NodePath("GameEndUi")
+
+[node name="BoardUi" type="CanvasLayer" parent="."]
+
+[node name="Background" type="TextureRect" parent="BoardUi"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_lvt0k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BoardUi"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="BoardUi/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_c6hth")
+
+[node name="Player2" parent="BoardUi/VBoxContainer/Panel" instance=ExtResource("12_hmlvb")]
+layout_mode = 1
+rotation = 3.14159
+pivot_offset = Vector2(960, 133)
+size_flags_vertical = 3
+player_id = 2
+
+[node name="Table" type="Control" parent="BoardUi/VBoxContainer" node_paths=PackedStringArray("deck", "drawn_cards_area", "card_placement_area")]
+z_index = 1
+custom_minimum_size = Vector2(0, 540)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+script = ExtResource("1_0c6vw")
+deck = NodePath("Cards/DeckArea/MarginContainer/Deck")
+drawn_cards_area = NodePath("Cards/CardPlacementArea/DrawnCardsArea")
+card_placement_area = NodePath("Cards/CardPlacementArea")
+played_card_scene = ExtResource("22_jfthc")
+
+[node name="Cards" type="HBoxContainer" parent="BoardUi/VBoxContainer/Table"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -284.0
+offset_bottom = 284.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="DeckArea" type="Control" parent="BoardUi/VBoxContainer/Table/Cards"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="BoardUi/VBoxContainer/Table/Cards/DeckArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 63
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="Deck" type="TextureButton" parent="BoardUi/VBoxContainer/Table/Cards/DeckArea/MarginContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_26hgj")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("6_sbxb1")
+
+[node name="CardPlacementArea" type="Control" parent="BoardUi/VBoxContainer/Table/Cards"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="DrawnCardsArea" type="Control" parent="BoardUi/VBoxContainer/Table/Cards/CardPlacementArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Player1" parent="BoardUi/VBoxContainer" instance=ExtResource("12_hmlvb")]
+layout_mode = 2
+size_flags_vertical = 3
+player_id = 1
+
+[node name="DiceSelectionUi" type="CanvasLayer" parent="." node_paths=PackedStringArray("box_panel", "dice_select_panel", "lofty_button_1", "lofty_button_2", "lofty_button_3", "start_wheel_button", "fortune_wheel")]
+visible = false
+script = ExtResource("8_3oo5e")
+box_panel = NodePath("BoxPanel")
+dice_select_panel = NodePath("BoxPanel/DiceSelectPanel")
+lofty_button_1 = NodePath("BoxPanel/DiceSelectPanel/VBoxContainer/HBoxContainer/1")
+lofty_button_2 = NodePath("BoxPanel/DiceSelectPanel/VBoxContainer/HBoxContainer/2")
+lofty_button_3 = NodePath("BoxPanel/DiceSelectPanel/VBoxContainer/HBoxContainer/3")
+start_wheel_button = NodePath("BoxPanel/DiceSelectPanel/VBoxContainer/Button")
+fortune_wheel = NodePath("BoxPanel/FortuneWheel")
+
+[node name="Background" type="Panel" parent="DiceSelectionUi"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bkh57")
+
+[node name="BoxPanel" type="Panel" parent="DiceSelectionUi"]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5ufxd")
+
+[node name="DiceSelectPanel" type="Panel" parent="DiceSelectionUi/BoxPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mtn8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DiceSelectionUi/BoxPanel/DiceSelectPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DiceSelectionUi/BoxPanel/DiceSelectPanel/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.603922, 0.392157, 0.211765, 1)
+text = "LABEL_CHOOSE_NUM_OF_LOFTYS"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DiceSelectionUi/BoxPanel/DiceSelectPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="1" type="TextureButton" parent="DiceSelectionUi/BoxPanel/DiceSelectPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = ExtResource("8_200mg")
+texture_normal = ExtResource("8_jqjl3")
+texture_pressed = ExtResource("10_ml0yv")
+stretch_mode = 5
+
+[node name="2" type="TextureButton" parent="DiceSelectionUi/BoxPanel/DiceSelectPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = ExtResource("8_200mg")
+texture_normal = ExtResource("9_2rlq8")
+texture_pressed = ExtResource("12_3y6em")
+stretch_mode = 5
+
+[node name="3" type="TextureButton" parent="DiceSelectionUi/BoxPanel/DiceSelectPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = ExtResource("8_200mg")
+texture_normal = ExtResource("10_v1rnv")
+texture_pressed = ExtResource("14_ec826")
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="DiceSelectionUi/BoxPanel/DiceSelectPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "BUTTON_SPINN_WHEEL"
+
+[node name="FortuneWheel" parent="DiceSelectionUi/BoxPanel" instance=ExtResource("17_yrr48")]
+visible = false
+layout_mode = 1
+
+[node name="RoundEndUi" type="CanvasLayer" parent="." node_paths=PackedStringArray("player_1_ui", "player_2_ui", "button", "ui_panel")]
+visible = false
+script = ExtResource("17_ci7ji")
+player_1_ui = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/PanelPlayer1")
+player_2_ui = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/PanelPlayer2")
+button = NodePath("BoxPanel/Button")
+ui_panel = NodePath("BoxPanel")
+
+[node name="Background" type="Panel" parent="RoundEndUi"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bkh57")
+
+[node name="BoxPanel" type="Panel" parent="RoundEndUi"]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5ufxd")
+
+[node name="BoxPanelContent" type="Panel" parent="RoundEndUi/BoxPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mtn8")
+
+[node name="MarginContainer" type="MarginContainer" parent="RoundEndUi/BoxPanel/BoxPanelContent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RoundEndUi/BoxPanel/BoxPanelContent/MarginContainer"]
+layout_mode = 2
+
+[node name="PanelPlayer1" parent="RoundEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer" instance=ExtResource("17_4tjhk")]
+layout_mode = 2
+
+[node name="PanelPlayer2" parent="RoundEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer" instance=ExtResource("17_4tjhk")]
+layout_mode = 2
+player_number = 2
+
+[node name="Button" type="Button" parent="RoundEndUi/BoxPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -480.0
+offset_top = -64.0
+offset_right = 480.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "BUTTON_NEXT_ROUND"
+
+[node name="GameEndUi" type="CanvasLayer" parent="." node_paths=PackedStringArray("ui_panel", "player_1_panel", "player_1_image", "player_1_image_panel", "player_1_name_label", "player_1_name_panel", "player_1_score_label", "player_2_panel", "player_2_image", "player_2_image_panel", "player_2_name_label", "player_2_name_panel", "player_2_score_label", "button")]
+visible = false
+script = ExtResource("19_s513q")
+ui_panel = NodePath("BoxPanel")
+player_1_panel = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1")
+player_1_image = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile/ProfileImage")
+player_1_image_panel = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile/Panel")
+player_1_name_label = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile/Name/Label")
+player_1_name_panel = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile/Name")
+player_1_score_label = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Score/HBoxContainer/Label")
+player_2_panel = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2")
+player_2_image = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile/ProfileImage")
+player_2_image_panel = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile/Panel")
+player_2_name_label = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile/Name/Label")
+player_2_name_panel = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile/Name")
+player_2_score_label = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Score/HBoxContainer/Label")
+button = NodePath("BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/Button")
+
+[node name="Background" type="Panel" parent="GameEndUi"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bkh57")
+
+[node name="BoxPanel" type="Panel" parent="GameEndUi"]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5ufxd")
+
+[node name="BoxPanelContent" type="Panel" parent="GameEndUi/BoxPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7mtn8")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameEndUi/BoxPanel/BoxPanelContent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1500, 0)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.603922, 0.392157, 0.211765, 1)
+theme_override_font_sizes/font_size = 60
+text = "LABEL_CONGRATULATIONS"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="Player1" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ykh3j")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Profile" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+size_flags_stretch_ratio = 4.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h407c")
+
+[node name="Panel" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sjf5d")
+
+[node name="ProfileImage" type="TextureRect" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_rn1av")
+expand_mode = 3
+
+[node name="Name" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 240.0
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_xrx2q")
+
+[node name="Label" type="Label" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Profile/Name"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LongUser Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Score" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jv8gw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Score"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Score/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+texture = ExtResource("18_sdo15")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Score/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.603922, 0.392157, 0.211765, 1)
+theme_override_font_sizes/font_size = 148
+text = "77"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer/Score/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+texture = ExtResource("18_sdo15")
+expand_mode = 3
+stretch_mode = 5
+flip_h = true
+
+[node name="Placeholder" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player1/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vqieu")
+
+[node name="Player2" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ykh3j")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Profile" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer"]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+size_flags_stretch_ratio = 4.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h407c")
+
+[node name="Panel" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sjf5d")
+
+[node name="ProfileImage" type="TextureRect" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_rn1av")
+expand_mode = 3
+
+[node name="Name" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 240.0
+offset_bottom = 3.05176e-05
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_xrx2q")
+
+[node name="Label" type="Label" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Profile/Name"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "LongUser Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 1
+
+[node name="Score" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jv8gw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Score"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Score/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+texture = ExtResource("18_sdo15")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Score/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.603922, 0.392157, 0.211765, 1)
+theme_override_font_sizes/font_size = 148
+text = "77"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer/Score/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+texture = ExtResource("18_sdo15")
+expand_mode = 3
+stretch_mode = 5
+flip_h = true
+
+[node name="Placeholder" type="Panel" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer/HBoxContainer/Player2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vqieu")
+
+[node name="Button" type="Button" parent="GameEndUi/BoxPanel/BoxPanelContent/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 60
+text = "BUTTON_START_NEW_GAME"

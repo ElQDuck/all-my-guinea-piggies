@@ -1,0 +1,186 @@
+[gd_scene load_steps=9 format=3 uid="uid://btr43ps8xb5c7"]
+
+[ext_resource type="Script" path="res://scripts/profile_setup_player.gd" id="1_sp1hu"]
+[ext_resource type="Texture2D" uid="uid://bghn4lriwnrej" path="res://assets/avatar_images/profile0.png" id="2_gy73u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l16hv"]
+bg_color = Color(1, 0.898039, 0.741176, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6s2dm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iipnc"]
+bg_color = Color(1, 0.419608, 0.419608, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wsfry"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7befl"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a317j"]
+bg_color = Color(1, 0.664754, 0.647076, 1)
+border_width_left = 24
+border_width_top = 24
+border_width_right = 24
+border_width_bottom = 24
+border_color = Color(1, 0.419608, 0.419608, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="ProfileSetupPlayer" type="Control" node_paths=PackedStringArray("color_preview", "color_button_left", "color_button_right", "avatar_image", "avatar_border", "avatar_button_left", "avatar_button_right", "input_player_name", "ready_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 6
+script = ExtResource("1_sp1hu")
+color_preview = NodePath("Panel/HBoxContainer/ColorSelector/HBoxContainerColor/ColorPreview")
+color_button_left = NodePath("Panel/HBoxContainer/ColorSelector/HBoxContainerColor/LeftButton")
+color_button_right = NodePath("Panel/HBoxContainer/ColorSelector/HBoxContainerColor/RightButton")
+avatar_image = NodePath("Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer/Panel/SelectedAvatar")
+avatar_border = NodePath("Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer/Panel/AvatarBorder")
+avatar_button_left = NodePath("Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer/LeftButton")
+avatar_button_right = NodePath("Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer/RightButton")
+input_player_name = NodePath("Panel/HBoxContainer/Profile/VBoxContainer/LineEdit")
+ready_button = NodePath("Panel/HBoxContainer/ReadyButton")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l16hv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorSelector" type="Panel" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6s2dm")
+
+[node name="HBoxContainerColor" type="HBoxContainer" parent="Panel/HBoxContainer/ColorSelector"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = -65.0
+offset_right = 102.0
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LeftButton" type="Button" parent="Panel/HBoxContainer/ColorSelector/HBoxContainerColor"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 96
+text = " < "
+
+[node name="ColorPreview" type="Panel" parent="Panel/HBoxContainer/ColorSelector/HBoxContainerColor"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iipnc")
+
+[node name="RightButton" type="Button" parent="Panel/HBoxContainer/ColorSelector/HBoxContainerColor"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 96
+text = " > "
+
+[node name="Profile" type="Panel" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wsfry")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer/Profile"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/HBoxContainer/Profile/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="LeftButton" type="Button" parent="Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 96
+text = "<"
+
+[node name="Panel" type="Panel" parent="Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(384, 384)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7befl")
+
+[node name="AvatarBorder" type="Panel" parent="Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a317j")
+
+[node name="SelectedAvatar" type="TextureRect" parent="Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 18.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.9)
+size_flags_vertical = 3
+texture = ExtResource("2_gy73u")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="RightButton" type="Button" parent="Panel/HBoxContainer/Profile/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 96
+text = ">"
+
+[node name="LineEdit" type="LineEdit" parent="Panel/HBoxContainer/Profile/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+placeholder_text = "PLACEHOLDER_TYPE_IN_NAME"
+alignment = 1
+select_all_on_focus = true
+
+[node name="ReadyButton" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 64
+toggle_mode = true
+text = "BUTTON_READY"

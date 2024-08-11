@@ -1,0 +1,59 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://coh1hpb85ikuu"]
+
+[ext_resource type="FontFile" uid="uid://bgejhiangff2e" path="res://assets/fonts/Rubik_Bubbles/RubikBubbles-Regular.ttf" id="1_y4xsd"]
+[ext_resource type="StyleBox" uid="uid://blb11n34o28ih" path="res://themes/style_boxes/start_game_button.stylebox" id="2_n7tb5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1f05x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rkmhl"]
+content_margin_left = 24.0
+content_margin_top = 8.0
+content_margin_right = 24.0
+content_margin_bottom = 8.0
+bg_color = Color(0.603922, 0.392157, 0.211765, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4s6f2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uefvk"]
+content_margin_left = 32.0
+content_margin_right = 32.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+
+[resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_disabled_color = Color(1, 1, 1, 0.501961)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 48
+Button/fonts/font = ExtResource("1_y4xsd")
+Button/styles/disabled = ExtResource("2_n7tb5")
+Button/styles/focus = SubResource("StyleBoxEmpty_1f05x")
+Button/styles/hover = ExtResource("2_n7tb5")
+Button/styles/normal = ExtResource("2_n7tb5")
+Button/styles/pressed = SubResource("StyleBoxFlat_rkmhl")
+Label/font_sizes/font_size = 48
+Label/fonts/font = ExtResource("1_y4xsd")
+LineEdit/colors/caret_color = Color(0.603922, 0.392157, 0.211765, 1)
+LineEdit/colors/clear_button_color = Color(0.603922, 0.392157, 0.211765, 1)
+LineEdit/colors/clear_button_color_pressed = Color(0.603922, 0.392157, 0.211765, 1)
+LineEdit/colors/font_color = Color(0.603922, 0.392157, 0.211765, 1)
+LineEdit/colors/font_placeholder_color = Color(0.603922, 0.392157, 0.211765, 0.25098)
+LineEdit/colors/font_selected_color = Color(1, 0.866667, 0.654902, 1)
+LineEdit/colors/selection_color = Color(0.603922, 0.392157, 0.211765, 1)
+LineEdit/font_sizes/font_size = 48
+LineEdit/fonts/font = ExtResource("1_y4xsd")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_4s6f2")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_uefvk")
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8
