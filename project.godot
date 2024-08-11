@@ -8,6 +8,14 @@
 
 config_version=5
 
+[GD-Sync]
+
+version="0.5"
+publicKey=""
+privateKey=""
+protectedMode=true
+uniqueUsername=false
+
 [application]
 
 config/name="All My Guinea Piggies"
@@ -25,6 +33,7 @@ config/icon="res://assets/icons/icon_512.png"
 [autoload]
 
 GlobalVars="*res://autoload/global_vars.gd"
+GDSync="*res://addons/GD-Sync/MultiplayerClient.gd"
 
 [display]
 
@@ -32,6 +41,10 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/GD-Sync/plugin.cfg")
 
 [gui]
 
