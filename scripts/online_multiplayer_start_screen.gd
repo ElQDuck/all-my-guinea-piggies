@@ -49,6 +49,10 @@ func _on_button_join_game_pressed():
 		"data": "test"
 	}
 	var message_bytes = JSON.stringify(message).to_utf8_buffer()
+	# !!! Wenn Sie nach Android exportieren, stellen Sie sicher,
+	# dass Sie die Berechtigung INTERNET in der Android-Exportvorgabe aktivieren,
+	# bevor Sie das Projekt exportieren oder die Ein-Klick-Auslieferung verwenden.
+	# Andernfalls wird jede Art von Netzwerkkommunikation von Android blockiert.
 	p2_peer.put_packet(message_bytes)
 
 func connected():
