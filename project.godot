@@ -34,6 +34,7 @@ config/icon="res://assets/icons/icon_512.png"
 
 GlobalVars="*res://autoload/global_vars.gd"
 GDSync="*res://addons/GD-Sync/MultiplayerClient.gd"
+EmbedGameAutoload="*res://addons/fabimakesgames.embed_game/embed_game_autoload.gd"
 
 [display]
 
@@ -44,7 +45,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GD-Sync/plugin.cfg")
+enabled=PackedStringArray("res://addons/GD-Sync/plugin.cfg", "res://addons/fabimakesgames.embed_game/plugin.cfg")
 
 [gui]
 
