@@ -1,19 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4wd7obwtauh4"]
+[gd_scene load_steps=5 format=3 uid="uid://c4wd7obwtauh4"]
 
 [ext_resource type="Texture2D" uid="uid://dn4te5tyiu16o" path="res://assets/backgrounds/title_background.svg" id="1_0jngp"]
+[ext_resource type="Script" path="res://scripts/online_multiplayer_start_screen.gd" id="1_ngflg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vfbgn"]
 bg_color = Color(1, 0.780392, 0.560784, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wuhmj"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" node_paths=PackedStringArray("button_host_game")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ngflg")
+button_host_game = NodePath("VBoxContainer/CreateGameButton")
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 1

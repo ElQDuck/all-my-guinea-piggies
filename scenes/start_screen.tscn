@@ -7,7 +7,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l142b"]
 bg_color = Color(1, 0.780392, 0.560784, 1)
 
-[node name="Control" type="Control" node_paths=PackedStringArray("start_online_game_button", "language_button")]
+[node name="Control" type="Control" node_paths=PackedStringArray("start_local_game_button", "start_online_game_button", "language_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,6 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1lscr")
+start_local_game_button = NodePath("VBoxContainer/StartGameButtonLocal")
 start_online_game_button = NodePath("VBoxContainer/StartGameButtonOnline")
 language_button = NodePath("TextureButton")
 

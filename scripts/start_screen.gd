@@ -29,7 +29,7 @@ func _on_start_local_game_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/profile_setup.tscn")
 
 func _on_start_online_game_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/profile_setup.tscn")
+	get_tree().change_scene_to_file("res://scenes/online_multiplayer_start_screen.tscn")
 
 
 func _change_language():
