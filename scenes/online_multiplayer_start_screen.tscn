@@ -8,7 +8,7 @@ bg_color = Color(1, 0.780392, 0.560784, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wuhmj"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("button_host_game")]
+[node name="Control" type="Control" node_paths=PackedStringArray("button_host_game", "button_join_game")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ngflg")
 button_host_game = NodePath("VBoxContainer/CreateGameButton")
+button_join_game = NodePath("VBoxContainer/JoinGameButton")
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 1
