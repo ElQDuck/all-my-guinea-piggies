@@ -6,6 +6,10 @@
 export.cfg
 export_presets.cfg
 
+# Godot WebRtc Plug-in generated files
+/webrtc/lib/~libwebrtc_native.windows.template_debug.x86_64.dll
+/addons/fabimakesgames.embed_game/bin/~embed_game.windows.template_debug.x86_64.dll
+
 # Imported translations (automatically generated from CSV files)
 *.translation
 
