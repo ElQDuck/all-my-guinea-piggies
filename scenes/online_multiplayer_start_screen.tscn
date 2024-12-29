@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4wd7obwtauh4"]
+[gd_scene load_steps=4 format=3 uid="uid://c4wd7obwtauh4"]
 
 [ext_resource type="Texture2D" uid="uid://dn4te5tyiu16o" path="res://assets/backgrounds/title_background.svg" id="1_0jngp"]
 [ext_resource type="Script" path="res://scripts/online_multiplayer_start_screen.gd" id="1_ngflg"]
@@ -6,9 +6,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vfbgn"]
 bg_color = Color(1, 0.780392, 0.560784, 1)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wuhmj"]
-
-[node name="Control" type="Control" node_paths=PackedStringArray("button_host_game", "button_join_game", "button_joffer")]
+[node name="Control" type="Control" node_paths=PackedStringArray("button_host_create_gdsync_lobby", "button_host_join_gdsync_lobby", "button_client_join_gdsync_lobby", "button_host_send_rtc_invite", "button_host_send_gdsync_message", "button_client_send_gdsync_message", "button_host_send_rtc_message", "button_client_send_rtc_message")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,9 +14,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ngflg")
-button_host_game = NodePath("VBoxContainer/CreateGameButton")
-button_join_game = NodePath("VBoxContainer/JoinGameButton")
-button_joffer = NodePath("VBoxContainer/HBoxContainer/BackButton")
+button_host_create_gdsync_lobby = NodePath("HBoxContainer/VBoxContainer/ButtonHostCreateGdSyncLobby")
+button_host_join_gdsync_lobby = NodePath("HBoxContainer/VBoxContainer/ButtonHostJoinLobby")
+button_client_join_gdsync_lobby = NodePath("HBoxContainer/VBoxContainer2/ButtonClientJoinLobby")
+button_host_send_rtc_invite = NodePath("HBoxContainer/VBoxContainer/ButtonHostSendInvite")
+button_host_send_gdsync_message = NodePath("HBoxContainer/VBoxContainer/ButtonHostSendGdSyncMessage")
+button_client_send_gdsync_message = NodePath("HBoxContainer/VBoxContainer2/ButtonClientSendGdSyncMessage")
+button_host_send_rtc_message = NodePath("HBoxContainer/VBoxContainer/ButtonHostSendMessage")
+button_client_send_rtc_message = NodePath("HBoxContainer/VBoxContainer2/ButtonClientSendMessage")
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 1
@@ -38,39 +41,50 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_0jngp")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -175.5
-offset_right = 175.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CreateGameButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 128
-text = "BUTTON_HOST_GAME"
-
-[node name="JoinGameButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 128
-text = "BUTTON_JOIN_GAME"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="BackButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 128
-text = "BUTTON_Create_offer"
-
-[node name="Panel" type="Panel" parent="VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_wuhmj")
+
+[node name="ButtonHostCreateGdSyncLobby" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "host create gd-sync lobby"
+
+[node name="ButtonHostJoinLobby" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "host join gd-sync lobby"
+
+[node name="ButtonHostSendGdSyncMessage" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "host send gd-sync message"
+
+[node name="ButtonHostSendInvite" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "host send invite"
+
+[node name="ButtonHostSendMessage" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "host send message"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonClientJoinLobby" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "client join gd-sync lobby"
+
+[node name="ButtonClientSendGdSyncMessage" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "client send gd-sync message"
+
+[node name="ButtonClientSendMessage" type="Button" parent="HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "client send message"
