@@ -21,10 +21,8 @@ enum Message {
 @export var button_host_send_rtc_message: Button
 @export var button_client_send_rtc_message: Button
 
-var peer_connection : WebRTCPeerConnection
-var web_rtc_data_channel : WebRTCDataChannel
-var rtc_mp := WebRTCMultiplayerPeer.new()
-var ws := WebSocketPeer.new()
+var peer_connection := WebRTCPeerConnection.new()
+var peer_data_channel := peer_connection.create_data_channel("test_channel", {"id": 1, "negotiated": true})
 
 var lobby_name_temp := "LobbyName"
 var lobby_password := "LobbyPassword"
@@ -53,13 +51,33 @@ func _ready() -> void:
 	GDSync.client_joined.connect(client_joined)
 	# This is necessary to make the function callable from other machines
 	GDSync.expose_func(_on_gd_sync_message_received)
+	GDSync.expose_func(_on_gd_sync_rtc_info_received)
+	GDSync.expose_func(_on_gd_sync_ice_candidate_info_received)
 	print("Trying to connect to the server...")
 	GDSync.start_multiplayer()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	#web_rtc_data_channel.poll()
+	# WebRtc setup
+	#peer_connection = WebRTCPeerConnection.new()
+	var rtc_init_result = peer_connection.initialize({"iceServers": [ { "urls": ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302"] } ]})
+	print("peer_connection.initialize result: " + str(rtc_init_result))
+	peer_connection.session_description_created.connect(_on_session_description_created)
+	peer_connection.ice_candidate_created.connect(_on_ice_candidate_created)
+	peer_data_channel = peer_connection.create_data_channel("test_channel", {"id": 1, "negotiated": true})
+	var channel_id := peer_data_channel.get_id()
+	print("channel state: " + str(channel_id))
+
+func _process(_delta):
+	peer_connection.poll()
+	if peer_data_channel.get_ready_state() == peer_data_channel.STATE_OPEN and peer_data_channel.get_available_packet_count() > 0:
+		print("rtc received: ", peer_data_channel.get_packet().get_string_from_utf8())
+
+func _on_session_description_created(type: String, sdp: String) -> void:
+	# Send the offer to the signaling server
+	var message = {"type": type, "sdp": sdp}
+	var message_json = JSON.stringify(message)
+	peer_connection.set_local_description(type, sdp)
+	GDSync.call_func_on(other_player_id, _on_gd_sync_rtc_info_received, [message_json])
+
 
 func _on_button_host_send_gdsync_message_pressed() -> void:
 	print("Host: Sending GD Sync message to client...")
@@ -75,42 +93,17 @@ func _on_button_client_send_gdsync_message_pressed() -> void:
 
 func _on_button_host_send_rtc_message_pressed() -> void:
 	print("Host: Sending RTC message to client...")
+	peer_data_channel.put_packet("Hi from RTC Host".to_utf8_buffer())
 
 func _on_button_client_send_rtc_message_pressed() -> void:
 	print("Client: Sending RTC message to host...")
+	peer_data_channel.put_packet("Hi from RTC Client".to_utf8_buffer())
 
-func _on_offer_created(type: String, data: String, id: int) -> void:
-	# type and data from: peer_connection.session_description_created.connect()
-	if not rtc_mp.has_peer(id):
-		return
-	print("created", type)
-	print("data", data)
-	rtc_mp.get_peer(id).connection.set_local_description(type, data)
-	if type == "offer": send_offer(id, data)
-	else: send_answer(id, data)
-
-##########################################################
-	#var message = {"type": type, "sdp": sdp}
-	#var messageJson = JSON.stringify(message)
-	#gd_sync.send_message(to_json(message))
-	# Here call _on_gd_sync_message_received() on the other players mashine.
-	# Iy self = p1 then p2._on_gd_sync_message_received() and vice versa
-	# with: GDSync.call_func_on(client_id, _receive_message, [text, _current_typing_channel, GDSync.get_client_id()])
-	print("Offer created. Sending data: " + data)
-	GDSync.call_func_on(other_player_id, _on_gd_sync_message_received, [data])
-
-func _on_ice_candidate_created(candidate):
-	var message = {"type": "candidate", "candidate": candidate}
+func _on_ice_candidate_created(media: String, index: int, ice_name: String) -> void:
+	var message = {"media": media, "index": index, "name": ice_name}
 	var messageJson = JSON.stringify(message)
-	#gd_sync.send_message(to_json(message))
-	# Here call _on_gd_sync_message_received() on the other players mashine.
-	# Iy self = p1 then p2._on_gd_sync_message_received() and vice versa
-	# with: GDSync.call_func_on(client_id, _receive_message, [text, _current_typing_channel, GDSync.get_client_id()])
 	print("Ice candidate created. Sending data: " + messageJson)
-	GDSync.call_func_on(other_player_id, _on_gd_sync_message_received, [messageJson])
-
-func _on_new_ice_candidate(mid_name: String, index_name: int, sdp_name: String, id: int) -> void:
-	send_candidate(id, mid_name, index_name, sdp_name)
+	GDSync.call_func_on(other_player_id, _on_gd_sync_ice_candidate_info_received, [messageJson])
 
 func _on_data_channel_received(channel):
 	channel.connect("data_received", self, "_on_data_channel_data_received")
@@ -190,45 +183,24 @@ func _on_gd_sync_message_received(message: String):
 	var data = JSON.parse_string(message)
 	print("Client: " + data["client_type"])
 	print("Message: " + data["message"])
-	# if data["type"] == "offer":
-	# 	peer_connection.set_remote_description("offer", data["sdp"])
-	# 	peer_connection.create_answer()
-	# elif data["type"] == "answer":
-	# 	peer_connection.set_remote_description("answer", data["sdp"])
-	# elif data["type"] == "candidate":
-	# 	peer_connection.add_ice_candidate(data["candidate"], 0, "test")
+
+func _on_gd_sync_rtc_info_received(message: String):
+	print("_on_gd_sync_rtc_info_received called with: " + message)
+	var rtc_data = JSON.parse_string(message)
+	print("type: " + rtc_data["type"])
+	print("sdp: " + rtc_data["sdp"])
+	peer_connection.set_remote_description(rtc_data["type"], rtc_data["sdp"])
+
+func _on_gd_sync_ice_candidate_info_received(message: String):
+	print("_on_gd_sync_ice_candidate_info_received called with: " + message)
+	var rtc_data = JSON.parse_string(message)
+	print("media: " + rtc_data["media"])
+	print("index: " + str(rtc_data["index"]))
+	print("name: " + rtc_data["name"])
+	peer_connection.add_ice_candidate(rtc_data["media"], rtc_data["index"], rtc_data["name"])
+
 
 func _on_button_host_send_invite_pressed():
 	print("Creating an offer...")
-	# Initialize WebRTC Peer Connection
-	peer_connection = WebRTCPeerConnection.new()
-	peer_connection.initialize({"iceServers": [ { "urls": ["stun:stun.l.google.com:19302"] } ]})
-	# Add a function which will be called when an offer gets created
-	# TODO change hardcoded ID
-	peer_connection.session_description_created.connect(_on_offer_created.bind(self_id))
-	# Add a function which will be called when an ice candidate is created
-	peer_connection.ice_candidate_created.connect(_on_new_ice_candidate.bind(self_id))
-	# Adding the created peer to the WebRTCMultiplayerPeer
-	rtc_mp.add_peer(peer_connection, self_id)
-	var offer_created = peer_connection.create_offer()
-	print("Creating offer result: " + str(offer_created))
-
-func send_candidate(id: int, mid: String, index: int, sdp: String) -> Error:
-	return _send_msg(Message.CANDIDATE, id, "\n%s\n%d\n%s" % [mid, index, sdp])
-
-func send_offer(id: int, offer: String) -> Error:
-	return _send_msg(Message.OFFER, id, offer)
-
-func send_answer(id: int, answer: String) -> Error:
-	return _send_msg(Message.ANSWER, id, answer)
-
-# TODO: CHange this to use GDSync instead of ws
-func _send_msg(type: int, id: int, data: String = "") -> Error:
-	# Error return value description: https://docs.godotengine.org/en/stable/classes/class_%40globalscope.html#enum-globalscope-error
-	var messageJson = JSON.stringify({
-		"type": type,
-		"id": id,
-		"data": data,
-	})
-	GDSync.call_func_on(other_player_id, _on_gd_sync_message_received, [messageJson])
-	return Error.OK
+	var create_offer_result = peer_connection.create_offer()
+	print("peer_connection.create_offer result: " + str(create_offer_result))
