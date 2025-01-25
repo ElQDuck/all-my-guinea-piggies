@@ -20,3 +20,7 @@ mono_crash.*.json
 
 # Godot exported projects
 export/
+
+# Gradle
+android/build
+android/.build_version
